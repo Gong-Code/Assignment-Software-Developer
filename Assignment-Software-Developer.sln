@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartApp", "SmartApp\SmartApp.csproj", "{B4E26E4E-05E1-425A-AAC1-811F403185E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartApp", "SmartApp\SmartApp.csproj", "{B4E26E4E-05E1-425A-AAC1-811F403185E5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device.WPF", "Device.WPF\Device.WPF.csproj", "{E8A86489-DAFE-471A-ADD8-62B5C7E76F45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureFunctions_API", "AzureFunctions_API\AzureFunctions_API.csproj", "{590D1728-0428-49AE-A19B-8E3B235B1139}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{B4E26E4E-05E1-425A-AAC1-811F403185E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4E26E4E-05E1-425A-AAC1-811F403185E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4E26E4E-05E1-425A-AAC1-811F403185E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8A86489-DAFE-471A-ADD8-62B5C7E76F45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8A86489-DAFE-471A-ADD8-62B5C7E76F45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8A86489-DAFE-471A-ADD8-62B5C7E76F45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8A86489-DAFE-471A-ADD8-62B5C7E76F45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{590D1728-0428-49AE-A19B-8E3B235B1139}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{590D1728-0428-49AE-A19B-8E3B235B1139}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{590D1728-0428-49AE-A19B-8E3B235B1139}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{590D1728-0428-49AE-A19B-8E3B235B1139}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

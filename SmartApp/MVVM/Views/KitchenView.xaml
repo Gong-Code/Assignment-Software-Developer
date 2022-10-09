@@ -19,7 +19,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="{Binding Title}" />
+            <TextBlock Grid.Row="0" Text="{Binding Title}" FontSize="20" Foreground="White"/>
 
             <ItemsControl Grid.Row="1" x:Name="deviceTileListView" ItemsSource="{Binding DeviceItems}">
 
