@@ -13,13 +13,15 @@
             <ImageBrush Opacity="0.75" ImageSource="/Assets/Images/kitchen.jpeg" />
         </Border.Background>
 
-        <Grid Margin="20">
+        <Grid Margin="30">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="{Binding Title}" FontSize="20" Foreground="White"/>
+            <components:WeatherComponent Grid.Row="0" />
+
+            <TextBlock Grid.Row="0" Text="{Binding Title}" />
 
             <ItemsControl Grid.Row="1" x:Name="deviceTileListView" ItemsSource="{Binding DeviceItems}">
 
@@ -44,6 +46,5 @@
 
             </ItemsControl>
         </Grid>
-
     </Border>
 </UserControl>

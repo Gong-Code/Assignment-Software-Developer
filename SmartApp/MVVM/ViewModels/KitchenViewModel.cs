@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Shared;
 using SmartApp.MVVM.Models;
+using SmartApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +14,7 @@ namespace SmartApp.MVVM.ViewModels
 {
     internal class KitchenViewModel
     {
+        private IWeatherService _weatherService;
         private DispatcherTimer timer;
         private ObservableCollection<DeviceItem> _deviceItems;
         private List<DeviceItem> _tempList;
@@ -22,13 +24,14 @@ namespace SmartApp.MVVM.ViewModels
         {
             _tempList = new List<DeviceItem>();
             _deviceItems = new ObservableCollection<DeviceItem>();
+            _weatherService = new WeatherService();
+
             PopulateDeviceItemsAsync().ConfigureAwait(false);
             SetInterval(TimeSpan.FromSeconds(3));
         }
 
 
         public string Title { get; set; } = "Kitchen";
-        public string Temperature { get; set; } = "23 °C";
         public string Humidity { get; set; } = "34 %";
         public IEnumerable<DeviceItem> DeviceItems => _deviceItems;
 
@@ -108,9 +111,9 @@ namespace SmartApp.MVVM.ViewModels
                                 device.StateInActive = "OFF";
                                 break;
 
-                            case "lock":
-                                device.IconActive = "\uf30d";
-                                device.IconInActive = "\uf3c2";
+                            case "temperature":
+                                device.IconActive = "\uf769";
+                                device.IconInActive = "\uf2cb";
                                 device.StateActive = "ON";
                                 device.StateInActive = "OFF";
                                 break;
