@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Microsoft.Azure.Devices;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace SmartApp.Components
@@ -6,6 +7,7 @@ namespace SmartApp.Components
 
     public partial class TileComponent : UserControl
     {
+        private readonly RegistryManager _registryManager = RegistryManager.CreateFromConnectionString("HostName=systemDev-IotHub.azure-devices.net;SharedAccessKeyName=SmartApp;SharedAccessKey=Zvwe3PBxT2Rd/2mr0C2KmnO3/Vud+5MPXJLoU27hVMs=");
         public TileComponent()
         {
             InitializeComponent();
@@ -63,6 +65,12 @@ namespace SmartApp.Components
         {
             get { return (string)GetValue(StateInActiveProperty); }
             set { SetValue(StateInActiveProperty, value); }
+        }
+
+        private async void btnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            var device = await _registryManager.GetDeviceAsync(DeviceName);
+            await _registryManager.RemoveDeviceAsync(device);
         }
     }
 }

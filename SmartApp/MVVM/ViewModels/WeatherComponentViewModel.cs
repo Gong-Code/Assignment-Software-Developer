@@ -21,7 +21,7 @@ namespace SmartApp.MVVM.ViewModels
 
         public string CurrentWeatherCondition
         {
-            get { return _currentWeatherCondition; }
+            get => _currentWeatherCondition;
             set
             {
                 _currentWeatherCondition = value;
@@ -33,7 +33,7 @@ namespace SmartApp.MVVM.ViewModels
 
         public string CurrentTemperature
         {
-            get { return _currentTemperature; }
+            get => _currentTemperature;
             set
             {
                 _currentTemperature = value;

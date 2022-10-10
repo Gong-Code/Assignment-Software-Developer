@@ -13,6 +13,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
@@ -31,6 +32,9 @@
                 <TextBlock Style="{StaticResource tilePanelDeviceType}"  />
             </StackPanel>
 
+            <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Button x:Name="btnRemove" Click="btnRemove_Click" Foreground="White" Background="LightSlateGray" Content="REMOVE DEVICE"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </StackPanel>
         </Grid>
     </Border>
 
