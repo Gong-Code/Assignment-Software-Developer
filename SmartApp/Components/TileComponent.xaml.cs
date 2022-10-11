@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.Devices;
+using SmartApp.MVVM.Models;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -69,8 +70,9 @@ namespace SmartApp.Components
 
         private async void btnRemove_Click(object sender, RoutedEventArgs e)
         {
-            var device = await _registryManager.GetDeviceAsync(DeviceName);
-            await _registryManager.RemoveDeviceAsync(device);
+            var button = sender as Button;
+            var deviceItem = (DeviceItem)button.DataContext;
+            await _registryManager.RemoveDeviceAsync(deviceItem.DeviceId);
         }
     }
 }
