@@ -12,6 +12,7 @@ namespace SmartApp.MVVM.ViewModels
     {
         private string? _currentWeatherCondition;
         private readonly IWeatherService _weatherService;
+        private int _interval = 20000;
 
         public WeatherComponentViewModel(IWeatherService weatherService)
         {
@@ -43,9 +44,13 @@ namespace SmartApp.MVVM.ViewModels
 
         private async Task SetWeatherAsync()
         {
-            var weather = await _weatherService.GetWeatherDataAsync();
-            CurrentTemperature = weather.Temperature.ToString();
-            CurrentWeatherCondition = weather.WeatherCondition ?? "";
+            while (true)
+            {
+                var weather = await _weatherService.GetWeatherDataAsync();
+                CurrentTemperature = weather.Temperature.ToString();
+                CurrentWeatherCondition = weather.WeatherCondition ?? "";
+                await Task.Delay(_interval);
+            }
         }
     }
 }
