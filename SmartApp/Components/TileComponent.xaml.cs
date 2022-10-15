@@ -1,18 +1,32 @@
 ﻿using Microsoft.Azure.Devices;
+using Newtonsoft.Json;
 using SmartApp.MVVM.Models;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace SmartApp.Components
 {
 
-    public partial class TileComponent : UserControl
+    public partial class TileComponent : UserControl, INotifyPropertyChanged
     {
         private readonly RegistryManager _registryManager = RegistryManager.CreateFromConnectionString("HostName=systemDev-IotHub.azure-devices.net;SharedAccessKeyName=SmartApp;SharedAccessKey=Zvwe3PBxT2Rd/2mr0C2KmnO3/Vud+5MPXJLoU27hVMs=");
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         public TileComponent()
         {
             InitializeComponent();
         }
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null!)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+
+
 
         public static readonly DependencyProperty DeviceNameProperty = DependencyProperty.Register("DeviceName", typeof(string), typeof(TileComponent));
         public string DeviceName
@@ -32,7 +46,10 @@ namespace SmartApp.Components
         public bool IsChecked
         {
             get { return (bool)GetValue(IsCheckedProperty); }
-            set { SetValue(IsCheckedProperty, value); }
+            set
+            {
+                SetValue(IsCheckedProperty, value);
+            }
         }
 
 
@@ -68,11 +85,48 @@ namespace SmartApp.Components
             set { SetValue(StateInActiveProperty, value); }
         }
 
+
+
+        private bool _deviceState;
+
+        public bool DeviceState
+        {
+            get { return _deviceState; }
+            set
+            {
+                _deviceState = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private async void btnDirectmethod_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var button = sender as CheckBox;
+                var deviceItem = (DeviceItem)button!.DataContext;
+
+                deviceItem.DeviceState = !deviceItem.DeviceState;
+
+                using ServiceClient serviceClient = ServiceClient.CreateFromConnectionString("HostName=systemDev-IotHub.azure-devices.net;SharedAccessKeyName=SmartApp;SharedAccessKey=Zvwe3PBxT2Rd/2mr0C2KmnO3/Vud+5MPXJLoU27hVMs=");
+
+                var directMethod = new CloudToDeviceMethod("OnOff");
+                directMethod.SetPayloadJson(JsonConvert.SerializeObject(new { deviceState = !deviceItem.DeviceState }));
+                var result = await serviceClient.InvokeDeviceMethodAsync(deviceItem.DeviceId, directMethod);
+
+                var data = JsonConvert.DeserializeObject<dynamic>(result.GetPayloadAsJson());
+                IsChecked = deviceItem.DeviceState;
+            }
+            catch { }
+        }
+
         private async void btnRemove_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var deviceItem = (DeviceItem)button.DataContext;
             await _registryManager.RemoveDeviceAsync(deviceItem.DeviceId);
         }
+
+       
     }
 }

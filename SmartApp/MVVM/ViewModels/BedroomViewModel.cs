@@ -1,5 +1,6 @@
-﻿using Microsoft.Azure.Devices;
-using Microsoft.Azure.Devices.Shared;
+﻿using Microsoft.Azure.Devices.Shared;
+using Microsoft.Azure.Devices;
+using SmartApp.MVVM.Cores;
 using SmartApp.MVVM.Models;
 using SmartApp.Services;
 using System;
@@ -12,18 +13,19 @@ using System.Windows.Threading;
 
 namespace SmartApp.MVVM.ViewModels
 {
-    internal class KitchenViewModel
+    internal class BedroomViewModel : ObservableObject
     {
         private IWeatherService _weatherService;
         private DispatcherTimer timer;
         private ObservableCollection<DeviceItem> _deviceItems;
         private List<DeviceItem> _tempList;
-        private readonly RegistryManager registryManager = RegistryManager.CreateFromConnectionString("HostName=systemDev-IotHub.azure-devices.net;SharedAccessKeyName=SmartApp;SharedAccessKey=Zvwe3PBxT2Rd/2mr0C2KmnO3/Vud+5MPXJLoU27hVMs=");
+        private readonly RegistryManager registryManager = RegistryManager.CreateFromConnectionString("HostName=systemDev-IotHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=X9pqkcjfVQ3jqCSRRQxSSVhgelmTEjaLnRl3ZLFfIe0=");
 
-        public KitchenViewModel()
+        public BedroomViewModel()
         {
             _tempList = new List<DeviceItem>();
             _deviceItems = new ObservableCollection<DeviceItem>();
+
             _weatherService = new WeatherService();
 
             PopulateDeviceItemsAsync().ConfigureAwait(false);
@@ -31,7 +33,8 @@ namespace SmartApp.MVVM.ViewModels
         }
 
 
-        public string Title { get; set; } = "Kitchen";
+        public string Title { get; set; } = "Bedroom";
+
         public string Humidity { get; set; } = "34 %";
         public IEnumerable<DeviceItem> DeviceItems => _deviceItems;
 
@@ -74,8 +77,8 @@ namespace SmartApp.MVVM.ViewModels
 
         private async Task PopulateDeviceItemsAsync()
         {
-            //var result = registryManager.CreateQuery("select * from devices where location = 'kitchen'");
-            var result = registryManager.CreateQuery("SELECT * FROM Devices WHERE properties.reported.location = 'kitchen'");
+            //var result = registryManager.CreateQuery("select * from devices where location = 'bedroom'");
+            var result = registryManager.CreateQuery("SELECT * FROM Devices WHERE properties.reported.location = 'bedroom'");
 
             if (result.HasMoreResults)
             {
@@ -93,8 +96,6 @@ namespace SmartApp.MVVM.ViewModels
                         try { device.DeviceName = twin.Properties.Reported["deviceName"]; }
                         catch { device.DeviceName = device.DeviceId; }
                         try { device.DeviceType = twin.Properties.Reported["deviceType"]; }
-                        catch { }
-                        try { device.DeviceState = twin.Properties.Reported["deviceState"]; }
                         catch { }
 
                         switch (device.DeviceType.ToLower())
@@ -120,6 +121,13 @@ namespace SmartApp.MVVM.ViewModels
                                 device.StateInActive = "OFF";
                                 break;
 
+                            case "aircondition":
+                                device.IconActive = "\uf8f4";
+                                device.IconInActive = "\uf8f4";
+                                device.StateActive = "ON";
+                                device.StateInActive = "OFF";
+                                break;
+
                             default:
                                 device.IconActive = "\uf2db";
                                 device.IconInActive = "\uf2db";
@@ -140,3 +148,4 @@ namespace SmartApp.MVVM.ViewModels
         }
     }
 }
+

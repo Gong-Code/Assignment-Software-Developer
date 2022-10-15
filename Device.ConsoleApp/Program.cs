@@ -154,7 +154,7 @@ class Program
         await _deviceClient.SetMethodHandlerAsync("OnOff", OnOff, null);
     }
 
-    private static Task<MethodResponse> OnOff(MethodRequest methodRequest, object userContext)
+    private static async Task<MethodResponse> OnOff(MethodRequest methodRequest, object userContext)
     {
         try
         {
@@ -165,11 +165,11 @@ class Program
             SetDeviceTwinAsync().ConfigureAwait(false);
             SaveConfigurationAsync().ConfigureAwait(false);
             Console.WriteLine($"Device {_settings.DeviceId} configured and awaiting new commands.");
-            return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(_settings)), 200));
+            return await Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(_settings)), 200));
         }
         catch (Exception ex)
         {
-            return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(ex)), 400));
+            return await Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(ex)), 400));
         }
     }
 
