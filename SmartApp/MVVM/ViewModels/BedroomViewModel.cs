@@ -114,7 +114,7 @@ namespace SmartApp.MVVM.ViewModels
                                 device.StateInActive = "OFF";
                                 break;
 
-                            case "temperature":
+                            case "thermometer":
                                 device.IconActive = "\uf769";
                                 device.IconInActive = "\uf2cb";
                                 device.StateActive = "ON";

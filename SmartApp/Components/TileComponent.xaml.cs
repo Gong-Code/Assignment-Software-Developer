@@ -126,7 +126,5 @@ namespace SmartApp.Components
             var deviceItem = (DeviceItem)button.DataContext;
             await _registryManager.RemoveDeviceAsync(deviceItem.DeviceId);
         }
-
-       
     }
 }
